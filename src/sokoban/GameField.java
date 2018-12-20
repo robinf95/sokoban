@@ -11,7 +11,7 @@ public class GameField {
 	//Levelbreite
 	private int levelWidth;
 	private boolean playerSet = false;
-	private int targetFields = 0, stoneFields = 0;
+	private int boxFields = 0, targetFields = 0;
 	
 	
 	public GameField(String levelString, int levelWidth) {
@@ -27,7 +27,7 @@ public class GameField {
 		for(int i=0; i <= levelString.length()-1; i++) {
 			//Wenn noch keine zeile (y) besteht oder levelbreite erreicht wurde
 			//--> erzeuge neue Spalte
-			if(levelString.charAt(i) == 'X') {
+			if(levelString.charAt(i) == 'X' || level.isEmpty()) {
 				y++;
 				x = 0;
 				level.add( new ArrayList<GameTile>());
@@ -40,14 +40,11 @@ public class GameField {
 			if( !playerSet && currentTile == TilesEnum.PLAYER ) {
 				level.get(y).add(new Player(x, y));
 			}else if( currentTile == TilesEnum.BOX ){
-
-				this.stoneFields++;
-			}else if( currentTile == TilesEnum.TARGET ){
-
-				this.targetFields++;
+				level.get(y).add(new Box(x, y));
+				this.boxFields++;
 			}else {
-				level.get(y).add(new GameTile(currentTile));
-				//level.get(y).add(new GameTile(x, y, currentTile));
+				if(currentTile == TilesEnum.TARGET)  targetFields++;
+				level.get(y).add(new GameTile(x, y, currentTile));
 			}
 			x++;
 		}
