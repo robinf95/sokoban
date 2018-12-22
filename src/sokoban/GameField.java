@@ -10,7 +10,7 @@ public class GameField {
 	private ArrayList<ArrayList<GameTile>> level;
 	//Levelbreite
 	private int levelWidth;
-	private boolean playerSet = false;
+	private Player playerOne = null;
 	private int boxFields = 0, targetFields = 0;
 	
 	
@@ -37,8 +37,9 @@ public class GameField {
 			//aktuelles Feld auslesen
 			currentTile = TilesEnum.getTile(levelString.charAt(i));
 			//wenn spieler und spieler noch nicht gesetzt
-			if( !playerSet && currentTile == TilesEnum.PLAYER ) {
-				level.get(y).add(new Player(x, y));
+			if(  currentTile == TilesEnum.PLAYER && playerOne == null) {
+				this.playerOne = new Player(x, y);
+				level.get(y).add(playerOne);
 			}else if( currentTile == TilesEnum.BOX ){
 				level.get(y).add(new Box(x, y));
 				this.boxFields++;
@@ -62,6 +63,26 @@ public class GameField {
 		}
 		
 		return outputString;
+	}
+
+	public Player getPlayerOne(){
+		return this.playerOne;
+	}
+
+	public GameTile getTile(int x, int y){
+		return this.level.get(y).get(x);
+	}
+
+	public boolean checkField(int x, int y){
+		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMoveable())
+			return true;
+
+		return false;
+	}
+
+	public boolean tileIsMoveable(int x, int y){
+		//überprüfen ob das nächste feld auch beweglich ist
+		return this.level.get(y).get(x) instanceof MovableTile;
 	}
 
 }

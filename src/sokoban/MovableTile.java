@@ -6,7 +6,7 @@ public class MovableTile extends GameTile {
 		super(x, y, tile);
 	}
 	
-	public void move(char dir) {
+/*	public void move(char dir) {
 		switch (dir) {
 			case 'w':
 				this.setY(y + 1);
@@ -17,5 +17,5 @@ public class MovableTile extends GameTile {
 			case 'd':
 				this.setX(x + 1);
 		}
-	}
+	}*/
 }

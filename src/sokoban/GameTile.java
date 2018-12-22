@@ -1,24 +1,30 @@
 package sokoban;
 
 public class GameTile{
-	protected int x, y;
+	private int x, y;
 	private TilesEnum tile;
 
 	public enum TilesEnum {
-		WALL("#"),
-		EMPTY(" "),
-		PLAYER("@"),
-		BOX("$"),
-		TARGET(".");
-		
+		WALL("#", false),
+		EMPTY(" ", true),
+		PLAYER("@", false),
+		BOX("$", false),
+		TARGET(".", true);
+		//Kann man auf Feld gehen?
+		private final boolean moveOn;
 		private final String tile;
-		TilesEnum(String c) {
+		TilesEnum(String c, boolean moveOn) {
 			this.tile = c;
+			this.moveOn = moveOn;
 		}
 		
 		@Override
 		public String toString() {
 			return this.tile;
+		}
+
+		public boolean isMoveable(){
+			return this.moveOn;
 		}
 		
 		public static TilesEnum getTile(char c) {
@@ -58,5 +64,13 @@ public class GameTile{
 	
 	public void setY(int y) {
 		this.y  = y;
+	}
+
+	public int getX(){
+		return this.x;
+	}
+
+	public int getY(){
+		return this.y;
 	}
 }
