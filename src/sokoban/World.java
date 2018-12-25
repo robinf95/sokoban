@@ -1,6 +1,7 @@
 package sokoban;
 
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class World {
 	GameField gameField;
@@ -11,12 +12,13 @@ public class World {
 		gameLogic = new GameLogic(gameField);
 	}
 	
-	private void draw() {
+	public void draw() {
 		System.out.println(gameField.toString());
 	}
 
 	public void input(String input){
 		try{
+
 			gameLogic.makeMovementPlayer(input.charAt(0) );
 			this.draw();
 		}catch(InputMismatchException e){
@@ -24,6 +26,19 @@ public class World {
 		}
 
 	}
-	
+
+	public void run() {
+		try (Scanner sc = new Scanner(System.in)) {
+			String input = "";
+			this.draw();
+
+			while (!gameLogic.checkWin()) {
+				System.out.printf("Eingabe:");
+				input = sc.next();
+				if(input == "e") return;
+				this.input(input);
+			}
+		}
+	}
 	
 }

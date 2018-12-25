@@ -11,7 +11,7 @@ public class GameField {
 	//Levelbreite
 	private Player playerOne = null;
 	private ArrayList<Box> boxes;
-	private int boxFields = 0, targetFields = 0;
+	private int targetFields = 0;
 	
 	
 	public GameField(String levelString) {
@@ -42,7 +42,6 @@ public class GameField {
 				currentTile = TilesEnum.EMPTY;
 			}else if( currentTile == TilesEnum.BOX ){
 				boxes.add(new Box(x, y));
-				this.boxFields++;
 				currentTile = TilesEnum.EMPTY;
 			}
 
@@ -75,6 +74,10 @@ public class GameField {
 		return outputString;
 	}
 
+	public GameTile getTile(int x, int y){
+		return this.level.get(y).get(x);
+	}
+
 
 	public boolean checkField(int x, int y){
 		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMovable())
@@ -93,6 +96,10 @@ public class GameField {
 				return b;
 		}
 		return null;
+	}
+
+	public int getBoxesAmount(){
+		return this.boxes.size();
 	}
 
 }
