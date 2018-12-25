@@ -9,6 +9,9 @@ public class GameField {
 	//zweidimensionale Liste zum speichern des Levels
 	private ArrayList<ArrayList<GameTile>> level;
 	//Levelbreite
+
+	//Abstraktion Player und Boxen sind eine Schicht über dem Level,
+	//so können diese besser bewegt werden.
 	private Player playerOne = null;
 	private ArrayList<Box> boxes;
 	private int targetFields = 0;
@@ -57,13 +60,16 @@ public class GameField {
 	}
 	
 	@Override
+	//level ausgeben
 	public String toString() {
 		String outputString = "";
 
 		for(int y= 0; y < level.size(); y++){
 			for(int x = 0; x< level.get(y).size(); x++){
+				//wenn player auf der koordinate
 				if(playerOne.compareCoordinate(x, y))
 					outputString += playerOne.toString();
+				//überprüfen ob eine Box auf der Koordinate
 				else if((this.getBox(x, y)) != null)
 					outputString += TilesEnum.BOX.toString();
 				else
@@ -79,6 +85,7 @@ public class GameField {
 	}
 
 
+	//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten
 	public boolean checkField(int x, int y){
 		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMovable())
 			return true;
