@@ -18,7 +18,6 @@ public class World {
 
 	public void input(String input){
 		try{
-
 			gameLogic.makeMovementPlayer(input.charAt(0) );
 			this.draw();
 		}catch(InputMismatchException e){
@@ -31,7 +30,7 @@ public class World {
 		try (Scanner sc = new Scanner(System.in)) {
 			String input = "";
 			this.draw();
-
+	//Führt das Programm solang aus bis die Boxen im Ziel sind
 			while (!gameLogic.checkWin()) {
 				System.out.printf("Eingabe:");
 				input = sc.next();

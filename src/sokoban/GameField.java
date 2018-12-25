@@ -14,7 +14,6 @@ public class GameField {
 	//so können diese besser bewegt werden.
 	private Player playerOne = null;
 	private ArrayList<Box> boxes;
-	private int targetFields = 0;
 	
 	
 	public GameField(String levelString) {
@@ -50,7 +49,6 @@ public class GameField {
 
 			if(currentTile == TilesEnum.TARGET){
 				level.get(y).add(new GameTile(currentTile, x, y));
-				targetFields++;
 			} else{
 				level.get(y).add(new GameTile(currentTile));
 			}
@@ -85,8 +83,9 @@ public class GameField {
 	}
 
 
-	//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten
+
 	public boolean checkField(int x, int y){
+		//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten?
 		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMovable())
 			return true;
 
