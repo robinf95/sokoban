@@ -2,9 +2,11 @@ package sokoban;
 
 public class MovableTile extends GameTile {
 
+
 	public MovableTile(int x, int y, TilesEnum tile) {
-		super(x, y, tile);
+		super(tile, x, y);
 	}
+
 
 	/*public void move(char dir) {
 		switch (dir) {

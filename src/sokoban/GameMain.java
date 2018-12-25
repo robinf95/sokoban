@@ -1,14 +1,25 @@
 package sokoban;
 
+import java.util.Scanner;
+
 public class GameMain {
 
 	public static void main(String[] args) {
-		World game;
-		LevelReader reader = new LevelReader();
-		
-		game = new World(reader.toString(), 10);
-		
-		game.draw();
+		try(Scanner sc = new Scanner(System.in)) {
+			World game;
+			String input = "";
+			LevelReader reader = new LevelReader();
+
+			game = new World(reader.toString());
+
+
+			while(input != "e"){
+				input = sc.next();
+				game.input(input);
+			}
+		}
+
+
 	}
 
 }

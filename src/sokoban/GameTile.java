@@ -1,8 +1,8 @@
 package sokoban;
 
 public class GameTile{
-	private int x, y;
 	private TilesEnum tile;
+	private int x, y;
 
 	public enum TilesEnum {
 		WALL("#", false),
@@ -23,7 +23,7 @@ public class GameTile{
 			return this.tile;
 		}
 
-		public boolean isMoveable(){
+		public boolean isMovable(){
 			return this.moveOn;
 		}
 		
@@ -39,14 +39,14 @@ public class GameTile{
 		}
 	}
 	
-	public GameTile(int x, int y, TilesEnum tile) {
+	public GameTile(TilesEnum tile) {
+		this.tile = tile;
+	}
+
+	public GameTile(TilesEnum tile, int x, int y){
 		this.tile = tile;
 		this.x = x;
 		this.y = y;
-	}
-	
-	public GameTile(TilesEnum tile) {
-		this.tile = tile;
 	}
 	
 	@Override
@@ -57,11 +57,10 @@ public class GameTile{
 	public TilesEnum getTile() {
 		return this.tile;
 	}
-	
 	public void setX(int x) {
 		this.x = x;
 	}
-	
+
 	public void setY(int y) {
 		this.y  = y;
 	}
@@ -72,5 +71,9 @@ public class GameTile{
 
 	public int getY(){
 		return this.y;
+	}
+
+	public boolean compareCoordinate(int x, int y){
+		return getY() == y && getX() == x;
 	}
 }

@@ -1,35 +1,59 @@
 package sokoban;
 
+import java.util.InputMismatchException;
+
 public class GameLogic {
     GameField gf;
-    Player playerOne = null;
+    Player player = null;
 
-    public GameLogic(GameField gf, Player playerOne){
+    public GameLogic(GameField gf){
         this.gf = gf;
-        this.playerOne = playerOne;
+        this.player = gf.getPlayerOne();
     }
 
-    public void makeMovement(char c, GameTile tile){
-        int x = tile.getX(), y = tile.getY();
+    public void makeMovementPlayer (char c) throws InputMismatchException {
+        int x = player.getX(), y = player.getY();
+        int newX = 0, newY = 0;
+        Box box;
 
         switch(c){
-            case 'w':
-                y += 1;
             case 's':
-                y -= 1;
+                y += newY += 1; break;//newY speichert die Bewegungsrichtung
+            case 'w':
+                y += newY -= 1; break;
             case 'a':
-                x -=1;
+                x += newX -=1; break;
             case 'd':
-                x += 1;
+                x += newX += 1; break;
+            default: throw new InputMismatchException();
+
         }
 
+        //Feld frei?
         if(gf.checkField( x , y )) {
-            tile.setX(x);
-            tile.setY(y);
+            player.setX(x  );
+            player.setY(y );
+        }else{
+            box = gf.getBox(x, y);
+            //überprüfen ob nächstes feld box
+            if( box!= null){
+                if(this.makeMovementBox( box, x+newX, y+newY)) {
+                    player.setX(x  );
+                    player.setY(y );
+                }
+            }
 
-        }else if(gf.tileIsMoveable(x, y)){
-            this.makeMovement( c, gf.getTile(x, y));
         }
+    }
+
+    private boolean makeMovementBox(Box box, int x, int y){
+        if(gf.checkField( x , y )) {
+            box.setX(x);
+            box.setY(y);
+            return true;
+        }
+        return false;
+
     }
 
 }

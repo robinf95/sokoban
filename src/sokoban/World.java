@@ -1,19 +1,28 @@
 package sokoban;
 
+import java.util.InputMismatchException;
+
 public class World {
 	GameField gameField;
-	Display display;
-	String canvas;
-	int levelWidth;
+	GameLogic gameLogic;
 	
-	public World(String levelString, int levelWidth) {
-		this.levelWidth = levelWidth;
-		gameField = new GameField(levelString, levelWidth);
-		display = new Display(this.gameField);
+	public World(String levelString) {
+		gameField = new GameField(levelString);
+		gameLogic = new GameLogic(gameField);
 	}
 	
-	public void draw() {
-		display.drawField();
+	private void draw() {
+		System.out.println(gameField.toString());
+	}
+
+	public void input(String input){
+		try{
+			gameLogic.makeMovementPlayer(input.charAt(0) );
+			this.draw();
+		}catch(InputMismatchException e){
+			System.err.println("Falsche Eingabe!");
+		}
+
 	}
 	
 	
