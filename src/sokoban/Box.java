@@ -1,9 +1,9 @@
 package sokoban;
 
-public class Box extends MovableTile {
+public class Box extends GameTile {
 	private boolean inTarget = false;
 	public Box(int x, int y) {
-		super(x, y, TilesEnum.BOX);
+		super(TilesEnum.BOX, x, y);
 	}
 
 	public void setInTarget(){

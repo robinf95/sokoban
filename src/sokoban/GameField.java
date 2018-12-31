@@ -32,7 +32,7 @@ public class GameField {
 			if(levelString.charAt(i) == 'X' || level.isEmpty()) {
 				y++;
 				x = 0;
-				level.add( new ArrayList<GameTile>());
+				level.add( new ArrayList<>());
 				continue;
 			}
 			
@@ -52,7 +52,6 @@ public class GameField {
 			} else{
 				level.get(y).add(new GameTile(currentTile));
 			}
-
 			x++;
 		}
 	}
@@ -64,10 +63,10 @@ public class GameField {
 
 		for(int y= 0; y < level.size(); y++){
 			for(int x = 0; x< level.get(y).size(); x++){
-				//wenn player auf der koordinate
+				// wenn Player auf der Koordinate
 				if(playerOne.compareCoordinate(x, y))
 					outputString += playerOne.toString();
-				//überprüfen ob eine Box auf der Koordinate
+				// überprüfen ob eine Box auf der Koordinate
 				else if((this.getBox(x, y)) != null)
 					outputString += TilesEnum.BOX.toString();
 				else
@@ -82,11 +81,9 @@ public class GameField {
 		return this.level.get(y).get(x);
 	}
 
-
-
 	public boolean checkField(int x, int y){
 		//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten?
-		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMovable())
+		if(x >= 0 && y >= 0 && level.get(y).get(x).getTileType().isMovable())
 			return true;
 
 		return false;

@@ -29,12 +29,12 @@ public class GameTile{
 		
 		public static TilesEnum getTile(char c) {
 			switch(c) {
-			case '@': return PLAYER;
-			case ' ': return EMPTY;
-			case '#': return WALL;
-			case '$': return BOX;
-			case '.': return TARGET;
-			default:  return EMPTY;
+				case '@': return PLAYER;
+				case ' ': return EMPTY;
+				case '#': return WALL;
+				case '$': return BOX;
+				case '.': return TARGET;
+				default:  return EMPTY;
 			}
 		}
 	}
@@ -54,9 +54,10 @@ public class GameTile{
 		return this.tile.toString();
 	}
 	
-	public TilesEnum getTile() {
+	public TilesEnum getTileType() {
 		return this.tile;
 	}
+
 	public void setX(int x) {
 		this.x = x;
 	}
