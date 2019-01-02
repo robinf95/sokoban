@@ -31,6 +31,8 @@ public class LevelReader {
 	private void readFile(File file){
 		try(Scanner sc = new Scanner(file)){
 			while(sc.hasNext()) {
+
+
 				//Zeile plus X als marker übernehmen
 				this.inputLevel += sc.nextLine() + "X";
 			}

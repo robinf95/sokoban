@@ -9,18 +9,20 @@ public class GameField {
 	//zweidimensionale Liste zum speichern des Levels
 	private ArrayList<ArrayList<GameTile>> level;
 	//Levelbreite
-	private int levelWidth;
-	private boolean playerSet = false;
-	private int boxFields = 0, targetFields = 0;
+
+	//Abstraktion Player und Boxen sind eine Schicht über dem Level,
+	//so können diese besser bewegt werden.
+	private Player playerOne = null;
+	private ArrayList<Box> boxes;
 	
 	
-	public GameField(String levelString, int levelWidth) {
-		createLevel(levelString, levelWidth);
+	public GameField(String levelString) {
+		createLevel(levelString);
 	}
 	
-	void createLevel(String levelString, int levelWidth) {
+	private void createLevel(String levelString) {
 		level = new ArrayList<>();
-		this.levelWidth = levelWidth;
+		boxes = new ArrayList<>();
 		int y = -1, x = 0;
 		TilesEnum currentTile;
 		
@@ -37,31 +39,73 @@ public class GameField {
 			//aktuelles Feld auslesen
 			currentTile = TilesEnum.getTile(levelString.charAt(i));
 			//wenn spieler und spieler noch nicht gesetzt
-			if( !playerSet && currentTile == TilesEnum.PLAYER ) {
-				level.get(y).add(new Player(x, y));
+			if(  currentTile == TilesEnum.PLAYER && playerOne == null) {
+				this.playerOne = new Player(x, y);
+				currentTile = TilesEnum.EMPTY;
 			}else if( currentTile == TilesEnum.BOX ){
-				level.get(y).add(new Box(x, y));
-				this.boxFields++;
-			}else {
-				if(currentTile == TilesEnum.TARGET)  targetFields++;
-				level.get(y).add(new GameTile(x, y, currentTile));
+				boxes.add(new Box(x, y));
+				currentTile = TilesEnum.EMPTY;
 			}
+
+			if(currentTile == TilesEnum.TARGET){
+				level.get(y).add(new GameTile(currentTile, x, y));
+			} else{
+				level.get(y).add(new GameTile(currentTile));
+			}
+
 			x++;
 		}
 	}
 	
 	@Override
+	//level ausgeben
 	public String toString() {
 		String outputString = "";
-		
-		for(ArrayList<GameTile> outerIndex : level) {
-			for(GameTile tile : outerIndex)
-				outputString += tile.toString();
-			
+
+		for(int y= 0; y < level.size(); y++){
+			for(int x = 0; x< level.get(y).size(); x++){
+				//wenn player auf der koordinate
+				if(playerOne.compareCoordinate(x, y))
+					outputString += playerOne.toString();
+				//überprüfen ob eine Box auf der Koordinate
+				else if((this.getBox(x, y)) != null)
+					outputString += TilesEnum.BOX.toString();
+				else
+					outputString += level.get(y).get(x).toString();
+			}
 			outputString += "\n";
 		}
-		
 		return outputString;
+	}
+
+	public GameTile getTile(int x, int y){
+		return this.level.get(y).get(x);
+	}
+
+
+
+	public boolean checkField(int x, int y){
+		//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten?
+		if( x >= 0 && y >= 0 && level.get(y).get(x).getTile().isMovable())
+			return true;
+
+		return false;
+	}
+
+	public Player getPlayerOne() {
+		return playerOne;
+	}
+
+	public Box getBox(int x, int y){
+		for(Box b : this.boxes ){
+			if(b.getX() == x && b.getY() == y)
+				return b;
+		}
+		return null;
+	}
+
+	public int getBoxesAmount(){
+		return this.boxes.size();
 	}
 
 }
