@@ -1,7 +1,5 @@
 package sokoban;
 
-import java.util.Scanner;
-
 public class GameMain {
 
 	public static void main(String[] args) {

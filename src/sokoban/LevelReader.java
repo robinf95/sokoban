@@ -31,22 +31,20 @@ public class LevelReader {
 	private void readFile(File file){
 		try(Scanner sc = new Scanner(file)){
 			while(sc.hasNext()) {
-
-
-				//Zeile plus X als marker übernehmen
+				//Zeile plus X als mMrker übernehmen
 				this.inputLevel += sc.nextLine() + "X";
 			}
 			
 			if(this.inputLevel == "")
 				throw new NoSuchElementException();
 			
-		}catch(FileNotFoundException e){
+		} catch(FileNotFoundException e){
 			System.err.println("Datei nicht gefunden!");
-		}
-		catch(NoSuchElementException e) {
+		} catch(NoSuchElementException e) {
 			System.err.println("Keine Zeichen gelesen!");
 		}
 	}
+
 	@Override
 	public String toString(){
 		return this.inputLevel;

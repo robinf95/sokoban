@@ -1,9 +1,9 @@
 package sokoban;
 
-public class Player extends MovableTile {
+public class Player extends GameTile {
 
 	public Player(int x, int y) {
-		super(x, y, TilesEnum.PLAYER);
+		super(TilesEnum.PLAYER, x, y);
 	}
 	
 }
