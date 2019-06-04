@@ -1,23 +1,28 @@
 package sokoban;
 
+import javafx.scene.image.ImageView;
+
 public class GameTile{
 	private TilesEnum tile;
 	private int x, y;
 
 	public enum TilesEnum {
-		WALL("#", false),
-		EMPTY(" ", true),
-		PLAYER("@", false),
-		BOX("$", false),
-		TARGET(".", true);
+		WALL("#", false, ""),
+		EMPTY(" ", true,  ""),
+		PLAYERONE("1", false, ""),
+		PLAYERTWO("2", false, ""),
+		BOX("$", false, ""),
+		TARGET(".", true, "");
 		//Kann man auf Feld gehen?
 		private final boolean moveOn;
 		private final String tile;
-		TilesEnum(String c, boolean moveOn) {
+		private final ImageView img;
+		TilesEnum(String c, boolean moveOn, String imgPath) {
 			this.tile = c;
 			this.moveOn = moveOn;
+			img = new ImageView(imgPath);
 		}
-		
+
 		@Override
 		public String toString() {
 			return this.tile;
@@ -26,10 +31,11 @@ public class GameTile{
 		public boolean isMovable(){
 			return this.moveOn;
 		}
-		
+
 		public static TilesEnum getTile(char c) {
 			switch(c) {
-				case '@': return PLAYER;
+				case '1': return PLAYERONE;
+				case '2': return PLAYERONE;
 				case ' ': return EMPTY;
 				case '#': return WALL;
 				case '$': return BOX;
@@ -37,8 +43,12 @@ public class GameTile{
 				default:  return EMPTY;
 			}
 		}
+
+		public ImageView getImg() {
+			return img;
+		}
 	}
-	
+
 	public GameTile(TilesEnum tile) {
 		this.tile = tile;
 	}
@@ -48,12 +58,12 @@ public class GameTile{
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.tile.toString();
 	}
-	
+
 	public TilesEnum getTileType() {
 		return this.tile;
 	}

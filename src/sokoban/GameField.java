@@ -10,22 +10,22 @@ public class GameField {
 	private ArrayList<ArrayList<GameTile>> level;
 	//Levelbreite
 
-	//Abstraktion Player und Boxen sind eine Schicht über dem Level,
-	//so können diese besser bewegt werden.
-	private Player playerOne = null;
+	//Abstraktion Player und Boxen sind eine Schicht ï¿½ber dem Level,
+	//so kï¿½nnen diese besser bewegt werden.
+	private Player[] player = new Player[2];
 	private ArrayList<Box> boxes;
-	
-	
+
+
 	public GameField(String levelString) {
 		createLevel(levelString);
 	}
-	
+
 	private void createLevel(String levelString) {
 		level = new ArrayList<>();
 		boxes = new ArrayList<>();
 		int y = -1, x = 0;
 		TilesEnum currentTile;
-		
+
 		for(int i=0; i <= levelString.length()-1; i++) {
 			//Wenn noch keine zeile (y) besteht oder levelbreite erreicht wurde
 			//--> erzeuge neue Spalte
@@ -35,12 +35,12 @@ public class GameField {
 				level.add( new ArrayList<>());
 				continue;
 			}
-			
+
 			//aktuelles Feld auslesen
 			currentTile = TilesEnum.getTile(levelString.charAt(i));
 			//wenn spieler und spieler noch nicht gesetzt
-			if(  currentTile == TilesEnum.PLAYER && playerOne == null) {
-				this.playerOne = new Player(x, y);
+			if(  currentTile == TilesEnum.PLAYERONE && player[1] == null) {
+				this.player[1] = new Player(x, y);
 				currentTile = TilesEnum.EMPTY;
 			}else if( currentTile == TilesEnum.BOX ){
 				boxes.add(new Box(x, y));
@@ -55,7 +55,7 @@ public class GameField {
 			x++;
 		}
 	}
-	
+
 	@Override
 	//level ausgeben
 	public String toString() {
@@ -64,9 +64,9 @@ public class GameField {
 		for(int y= 0; y < level.size(); y++){
 			for(int x = 0; x< level.get(y).size(); x++){
 				// wenn Player auf der Koordinate
-				if(playerOne.compareCoordinate(x, y))
-					outputString += playerOne.toString();
-				// überprüfen ob eine Box auf der Koordinate
+				if(player[1].compareCoordinate(x, y))
+					outputString += player[1].toString();
+				// ï¿½berprï¿½fen ob eine Box auf der Koordinate
 				else if((this.getBox(x, y)) != null)
 					outputString += TilesEnum.BOX.toString();
 				else
@@ -82,7 +82,7 @@ public class GameField {
 	}
 
 	public boolean checkField(int x, int y){
-		//Ist das Feld begehbar und werden die Feldgrenzen nicht überschritten?
+		//Ist das Feld begehbar und werden die Feldgrenzen nicht ï¿½berschritten?
 		if(x >= 0 && y >= 0 && level.get(y).get(x).getTileType().isMovable())
 			return true;
 
@@ -90,7 +90,7 @@ public class GameField {
 	}
 
 	public Player getPlayerOne() {
-		return playerOne;
+		return player[1];
 	}
 
 	public Box getBox(int x, int y){
@@ -105,4 +105,7 @@ public class GameField {
 		return this.boxes.size();
 	}
 
+	public ArrayList<ArrayList<GameTile>> getLevel() {
+		return level;
+	}
 }
