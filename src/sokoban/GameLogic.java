@@ -4,16 +4,18 @@ import java.util.InputMismatchException;
 
 public class GameLogic {
     GameField gf;
-    Player player;
+    Player[] player;
     private int boxesInTarget = 0;
 
     public GameLogic(GameField gf){
         this.gf = gf;
-        this.player = gf.getPlayerOne();
+        this.player = gf.getPlayer();
     }
 
-    public void makeMovementPlayer (char c) throws InputMismatchException {
-        int x = player.getX(), y = player.getY();
+    public void makeMovementPlayer (char c, boolean isPlayerOne) throws InputMismatchException {
+        //hole spieler nummer
+        int numOfPlayer = (isPlayerOne ? 0 : 1);
+        int x = player[numOfPlayer].getX(), y = player[numOfPlayer].getY();
         int newX = 0, newY = 0;
         Box box;
 
@@ -31,21 +33,21 @@ public class GameLogic {
 
         }
 
-        //Hole Box falls nächstes Feld box
+        //Hole Box falls nï¿½chstes Feld box
         box = gf.getBox(x, y);
         //Feld begehbar und kein BoxFeld?
         if (gf.checkField(x, y) && box == null) {
-            player.setX(x);
-            player.setY(y);
+            player[numOfPlayer].setX(x);
+            player[numOfPlayer].setY(y);
         } else if (box != null){
             if (this.makeMovementBox(box, x+newX, y+newY)) {
-                player.setX(x);
-                player.setY(y);
+                player[numOfPlayer].setX(x);
+                player[numOfPlayer].setY(y);
             }
         }
     }
 
-    /* überprüfen ob Box bewegt werden kann, nächstes Feld muss frei sein
+    /* ï¿½berprï¿½fen ob Box bewegt werden kann, nï¿½chstes Feld muss frei sein
     und darf keine Box sein */
     private boolean makeMovementBox(Box box, int x, int y){
         if(gf.checkField( x , y )) {
@@ -58,7 +60,7 @@ public class GameLogic {
 
     }
 
-    // überprüfen ob die Box das Ziel erreicht oder wieder verlassen hat
+    // ï¿½berprï¿½fen ob die Box das Ziel erreicht oder wieder verlassen hat
     private void checkInTarget(Box box, int x, int y){
         if (gf.getTile(x ,y).getTileType() == GameTile.TilesEnum.TARGET) {
             box.setInTarget(); // Switch true/false

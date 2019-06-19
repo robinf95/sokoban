@@ -7,7 +7,8 @@ public class GameTile{
 	public enum TilesEnum {
 		WALL("#", false),
 		EMPTY(" ", true),
-		PLAYER("@", false),
+		PLAYERONE("1", false),
+		PLAYERTWO("2", false),
 		BOX("$", false),
 		TARGET(".", true);
 		//Kann man auf Feld gehen?
@@ -29,7 +30,8 @@ public class GameTile{
 		
 		public static TilesEnum getTile(char c) {
 			switch(c) {
-				case '@': return PLAYER;
+				case '1': return PLAYERONE;
+				case '2': return PLAYERONE;
 				case ' ': return EMPTY;
 				case '#': return WALL;
 				case '$': return BOX;

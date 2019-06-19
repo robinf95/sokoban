@@ -6,9 +6,12 @@ import java.util.Scanner;
 public class World {
 	GameField gameField;
 	GameLogic gameLogic;
+	boolean isPlayerOneTurn = true;
+	boolean isMultiplayer;
 	
-	public World(String levelString) {
-		gameField = new GameField(levelString);
+	public World(String levelString, boolean isMultiplayer) {
+		this.isMultiplayer = isMultiplayer;
+		gameField = new GameField(levelString, isMultiplayer);
 		gameLogic = new GameLogic(gameField);
 	}
 	
@@ -16,12 +19,14 @@ public class World {
 		System.out.println(gameField.toString());
 	}
 
-	public void input(String input){
+	public boolean input(String input, boolean isPlayerOne){
 		try {
-			gameLogic.makeMovementPlayer(input.charAt(0) );
+			gameLogic.makeMovementPlayer(input.charAt(0), isPlayerOne );
 			this.draw();
+			return !isPlayerOne;
 		} catch (InputMismatchException e) {
 			System.err.println("Falsche Eingabe!");
+			return isPlayerOne;
 		}
 
 	}
@@ -30,7 +35,7 @@ public class World {
 		try (Scanner sc = new Scanner(System.in)) {
 			String input;
 			this.draw();
-			//Führt das Programm solange aus bis die Boxen im Ziel sind
+			//Fï¿½hrt das Programm solange aus bis die Boxen im Ziel sind
 			while (!gameLogic.checkWin()) {
 				System.out.printf("Score: %d/%d%n", gameLogic.getBoxesInTarget(), gameField.getBoxesAmount());
 				System.out.printf("Eingabe: ");
@@ -39,9 +44,13 @@ public class World {
 					System.out.println("Spiel beendet");
 					return;
 				}
-				this.input(input);
+				//gibt Spieler zurÃ¼ck, welcher dran is
+				isPlayerOneTurn = this.input(input, isPlayerOneTurn);
+
+				//wenn keine Multiplayer dann ist player1 immer am zug
+				if(!isMultiplayer) isPlayerOneTurn = true;
 			}
-			System.out.println("Herzlichen Glückwunsch! Level bestanden!");
+			System.out.println("Herzlichen Glueckwunsch! Level bestanden!");
 			System.exit(0);
 		}
 	}
