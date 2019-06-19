@@ -11,14 +11,15 @@ public class GameMain {
 
 			System.out.println("Multiplayer? (1):  ");
 
-			try(Scanner sc = new Scanner(System.in)){
+			try(Scanner sc = new Scanner(System.in)) {
 
-				 isMultiplayer = (sc.nextInt() == 1) ;
+				isMultiplayer = (sc.nextInt() == 1);
+
+
+				game = new World(reader.toString(), isMultiplayer);
+
+				game.run();
 			}
-
-			game = new World(reader.toString(), isMultiplayer);
-
-			game.run();
 	}
 
 }

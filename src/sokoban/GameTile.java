@@ -31,7 +31,7 @@ public class GameTile{
 		public static TilesEnum getTile(char c) {
 			switch(c) {
 				case '1': return PLAYERONE;
-				case '2': return PLAYERONE;
+				case '2': return PLAYERTWO;
 				case ' ': return EMPTY;
 				case '#': return WALL;
 				case '$': return BOX;

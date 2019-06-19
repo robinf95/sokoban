@@ -71,9 +71,8 @@ public class GameField {
 				if(player[0].compareCoordinate(x, y))
 					outputString += player[0].toString();
 				//nur checken wenn 2 spielen
-				else if(isMultiplayer){
-					if(player[1].compareCoordinate(x, y))
-						outputString += player[1].toString();
+				else if(isMultiplayer && player[1].compareCoordinate(x, y)){
+					outputString += player[1].toString();
 				}
 				// �berpr�fen ob eine Box auf der Koordinate
 				else if((this.getBox(x, y)) != null)
