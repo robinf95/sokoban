@@ -9,10 +9,12 @@ public class Server {
     
     void connect() throws IOException {
         ServerSocket serverSocket = new ServerSocket(4444);
-        Socket client = serverSocket.accept();
-        String msg = read(client);
-        System.out.println(msg);
-        write(client, msg);
+        while (true) {
+            Socket client = serverSocket.accept();
+            String msg = read(client);
+            System.out.println(msg);
+            write(client, msg);
+        }
     }
     
     static String read(Socket socket) throws IOException {

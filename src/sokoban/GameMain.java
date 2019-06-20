@@ -45,7 +45,7 @@ public class GameMain {
 						Server server = new Server();
 						reader = new LevelReader();
 						worldStr = reader.toString();
-						try {
+					try {
 							server.connect();
 						} catch (IOException e) {
 							e.printStackTrace();
