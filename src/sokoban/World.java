@@ -31,28 +31,26 @@ public class World {
 
 	}
 
-	public void run() {
-		try (Scanner sc = new Scanner(System.in)) {
-			String input;
-			this.draw();
-			//F�hrt das Programm solange aus bis die Boxen im Ziel sind
-			while (!gameLogic.checkWin()) {
-				System.out.printf("Score: %d/%d%n", gameLogic.getBoxesInTarget(), gameField.getBoxesAmount());
-				System.out.printf("Eingabe: ");
-				input = sc.next();
-				if (input.charAt(0) == 'e') {
-					System.out.println("Spiel beendet");
-					return;
-				}
-				//gibt Spieler zurück, welcher dran ist
-				isPlayerOneTurn = this.input(input, isPlayerOneTurn);
-
-				//wenn keine Multiplayer dann ist player1 immer am zug
-				if(!isMultiplayer) isPlayerOneTurn = true;
+	public void run(Scanner sc) {
+		String input;
+		this.draw();
+		//F�hrt das Programm solange aus bis die Boxen im Ziel sind
+		while (!gameLogic.checkWin()) {
+			System.out.printf("Score: %d/%d%n", gameLogic.getBoxesInTarget(), gameField.getBoxesAmount());
+			System.out.printf("Eingabe: ");
+			input = sc.next();
+			if (input.charAt(0) == 'e') {
+				System.out.println("Spiel beendet");
+				return;
 			}
-			System.out.println("Herzlichen Glueckwunsch! Level bestanden!");
-			System.exit(0);
+			//gibt Spieler zurück, welcher dran ist
+			isPlayerOneTurn = this.input(input, isPlayerOneTurn);
+
+			//wenn keine Multiplayer dann ist player1 immer am zug
+			if(!isMultiplayer) isPlayerOneTurn = true;
 		}
+		System.out.println("Herzlichen Glueckwunsch! Level bestanden!");
+		System.exit(0);
 	}
 	
 }

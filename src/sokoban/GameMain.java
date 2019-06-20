@@ -36,7 +36,7 @@ public class GameMain {
 						}
 						client = new Client(socket);
 						try {
-							client.connect("Connected");
+							client.write(socket, "Connected");
 							worldStr = client.read(socket);
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -46,12 +46,8 @@ public class GameMain {
 						reader = new LevelReader();
 						worldStr = reader.toString();
 						try {
-							server.write(worldStr);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						try {
 							server.connect();
+							server.write(worldStr);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -63,7 +59,7 @@ public class GameMain {
 
 				game = new World(worldStr, isMultiplayer);
 
-				game.run();
+				game.run(sc);
 			}
 		}
 	}

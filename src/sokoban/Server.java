@@ -10,11 +10,9 @@ public class Server {
     
     void connect() throws IOException {
         ServerSocket serverSocket = new ServerSocket(4444);
-        while(true) {
-            client = serverSocket.accept();
-            String msg = read(client);
-            System.out.println(msg);
-        }
+        client = serverSocket.accept();
+        String msg = read(client);
+        System.out.println(msg);
     }
     
     static String read(Socket socket) throws IOException {
@@ -24,7 +22,7 @@ public class Server {
         return new String(buffer, 0, num);
     }
     
-    static void write(String str) throws IOException {
+    void write(String str) throws IOException {
         PrintWriter out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
         out.print(str);
         out.flush();

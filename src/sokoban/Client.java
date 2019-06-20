@@ -6,18 +6,11 @@ import java.net.Socket;
 public class Client {
     private Socket socket;
     
-    public Client(Socket socket) {
+    Client(Socket socket) {
         this.socket = socket;
     }
-
-    void connect(String msg) throws IOException {
-        write(socket, msg);
-        String received = read(socket);
-        System.out.println(received);
-        
-    }
     
-    public static void write(Socket socket, String msg) throws IOException {
+    void write(Socket socket, String msg) throws IOException {
         PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
         out.print(msg);
         out.flush();
