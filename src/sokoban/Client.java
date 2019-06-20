@@ -18,12 +18,9 @@ public class Client {
     }
     
     public static void write(Socket socket, String msg) throws IOException {
-        while (true) {
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            out.print(msg);
-            System.out.println("MESSAGE: " + msg);
-            out.flush();
-        }
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        out.print(msg);
+        out.flush();
     }
     
     String read(Socket socket) throws IOException {

@@ -10,7 +10,7 @@ public class GameMain {
 			World game;
 			boolean isMultiplayer;
 			boolean isHost;
-			String ip = "";
+			String ip;
 			LevelReader reader;
 			String worldStr = "";
 
@@ -45,15 +45,23 @@ public class GameMain {
 						Server server = new Server();
 						reader = new LevelReader();
 						worldStr = reader.toString();
-					try {
+						try {
+							server.write(worldStr);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						try {
 							server.connect();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
+				} else {
+					reader = new LevelReader();
+					worldStr = reader.toString();
 				}
 
-				game = new World(worldStr, isMultiplayer, ip);
+				game = new World(worldStr, isMultiplayer);
 
 				game.run();
 			}

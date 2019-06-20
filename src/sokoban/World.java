@@ -1,6 +1,5 @@
 package sokoban;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,13 +8,9 @@ public class World {
 	private GameLogic gameLogic;
 	private boolean isPlayerOneTurn = true;
 	private boolean isMultiplayer;
-	private boolean isHost;
-	private String ip;
 	
-	public World(String levelString, boolean isMultiplayer, String ip) {
+	public World(String levelString, boolean isMultiplayer) {
 		this.isMultiplayer = isMultiplayer;
-		this.isHost = isHost;
-		this.ip = ip;
 		gameField = new GameField(levelString, isMultiplayer);
 		gameLogic = new GameLogic(gameField);
 	}

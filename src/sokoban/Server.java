@@ -5,15 +5,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+    static Socket client;
     public Server() {}
     
     void connect() throws IOException {
         ServerSocket serverSocket = new ServerSocket(4444);
-        while (true) {
-            Socket client = serverSocket.accept();
+        while(true) {
+            client = serverSocket.accept();
             String msg = read(client);
             System.out.println(msg);
-            write(client, msg);
         }
     }
     
@@ -24,8 +24,8 @@ public class Server {
         return new String(buffer, 0, num);
     }
     
-    static void write(Socket socket, String str) throws IOException {
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+    static void write(String str) throws IOException {
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
         out.print(str);
         out.flush();
     }
