@@ -32,7 +32,6 @@ public class GameTile{
 			switch(c) {
 				case '1': return PLAYERONE;
 				case '2': return PLAYERTWO;
-				case ' ': return EMPTY;
 				case '#': return WALL;
 				case '$': return BOX;
 				case '.': return TARGET;

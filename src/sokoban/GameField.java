@@ -65,8 +65,8 @@ public class GameField {
 	public String toString() {
 		String outputString = "";
 
-		for(int y= 0; y < level.size(); y++){
-			for(int x = 0; x< level.get(y).size(); x++){
+		for(int y = 0; y < level.size(); y++){
+			for(int x = 0; x < level.get(y).size(); x++){
 				// wenn Player auf der Koordinate
 				if(player[0].compareCoordinate(x, y))
 					outputString += player[0].toString();

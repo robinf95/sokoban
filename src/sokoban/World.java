@@ -1,16 +1,21 @@
 package sokoban;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class World {
-	GameField gameField;
-	GameLogic gameLogic;
-	boolean isPlayerOneTurn = true;
-	boolean isMultiplayer;
+	private GameField gameField;
+	private GameLogic gameLogic;
+	private boolean isPlayerOneTurn = true;
+	private boolean isMultiplayer;
+	private boolean isHost;
+	private String ip;
 	
-	public World(String levelString, boolean isMultiplayer) {
+	public World(String levelString, boolean isMultiplayer, String ip) {
 		this.isMultiplayer = isMultiplayer;
+		this.isHost = isHost;
+		this.ip = ip;
 		gameField = new GameField(levelString, isMultiplayer);
 		gameLogic = new GameLogic(gameField);
 	}
@@ -21,7 +26,7 @@ public class World {
 
 	public boolean input(String input, boolean isPlayerOne){
 		try {
-			gameLogic.makeMovementPlayer(input.charAt(0), isPlayerOne );
+			gameLogic.makeMovementPlayer(input.charAt(0), isPlayerOne, isMultiplayer);
 			this.draw();
 			return !isPlayerOne;
 		} catch (InputMismatchException e) {
@@ -44,7 +49,7 @@ public class World {
 					System.out.println("Spiel beendet");
 					return;
 				}
-				//gibt Spieler zurück, welcher dran is
+				//gibt Spieler zurück, welcher dran ist
 				isPlayerOneTurn = this.input(input, isPlayerOneTurn);
 
 				//wenn keine Multiplayer dann ist player1 immer am zug

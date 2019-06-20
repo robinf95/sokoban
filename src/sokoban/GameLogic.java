@@ -12,12 +12,18 @@ public class GameLogic {
         this.player = gf.getPlayer();
     }
 
-    public void makeMovementPlayer (char c, boolean isPlayerOne) throws InputMismatchException {
+    public void makeMovementPlayer (char c, boolean isPlayerOne, boolean isMultiplayer) throws InputMismatchException {
         //hole spieler nummer
         int numOfPlayer = (isPlayerOne ? 0 : 1);
         int x = player[numOfPlayer].getX(), y = player[numOfPlayer].getY();
         int newX = 0, newY = 0;
         Box box;
+        
+        if (isMultiplayer) {
+            if (isPlayerOne) {
+                
+            }
+        }
 
         // newX/Y speichert die Bewegungsrichtung
         switch(c){
