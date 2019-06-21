@@ -48,10 +48,10 @@ public class World {
 		//F�hrt das Programm solange aus bis die Boxen im Ziel sind
 		while (!gameLogic.checkWin()) {
 			System.out.printf("Score: %d/%d%n", gameLogic.getBoxesInTarget(), gameField.getBoxesAmount());
-			System.out.printf("Eingabe: ");
 			if(isMultiplayer){
 				//bin ich dran?
 				if((server != null && isPlayerOneTurn) ||(client != null && !isPlayerOneTurn)){
+					System.out.printf("Eingabe: ");
 					input = sc.next();
 					try {
 						if(server != null)
@@ -72,6 +72,7 @@ public class World {
 					}
 				}
 			}else{
+				System.out.printf("Eingabe: ");
 				input = sc.next();
 			}
 

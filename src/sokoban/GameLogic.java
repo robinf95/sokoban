@@ -18,12 +18,6 @@ public class GameLogic {
         int x = player[numOfPlayer].getX(), y = player[numOfPlayer].getY();
         int newX = 0, newY = 0;
         Box box;
-        
-        if (isMultiplayer) {
-            if (isPlayerOne) {
-                
-            }
-        }
 
         // newX/Y speichert die Bewegungsrichtung
         switch(c){
