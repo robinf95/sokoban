@@ -13,12 +13,14 @@ public class GameMain {
 			String ip;
 			LevelReader reader;
 			String worldStr = "";
-
-			System.out.println("Multiplayer? (1):  ");
+			Server server = null;
+			Client client = null;
 
 			try(Scanner sc = new Scanner(System.in)) {
+				System.out.println("Multiplayer? (1):  ");
 
 				isMultiplayer = (sc.nextInt() == 1);
+
 
 				if (isMultiplayer) {
 					System.out.println("Willst du das Spiel hosten? (1): ");
@@ -27,37 +29,28 @@ public class GameMain {
 					if (!isHost) {
 						System.out.println("IP des Servers: ");
 						ip = sc.next();
-						Client client;
-						Socket socket = null;
-						try {
-							socket = new Socket(ip, 4444);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						client = new Client(socket);
-						try {
-							client.write(socket, "Connected");
-							worldStr = client.read(socket);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						client = new Client(ip, 4444);
 					} else {
-						Server server = new Server();
-						reader = new LevelReader(sc);
-						worldStr = reader.toString();
+						server = new Server();
 						try {
+							//Level einlesen
+							reader = new LevelReader(sc, true);
+							worldStr = reader.toString();
 							server.connect();
 							server.write(worldStr);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
+					game = new World(worldStr, true, client, server);
 				} else {
-					reader = new LevelReader(sc);
+					//Level einlesen
+					reader = new LevelReader(sc, false);
 					worldStr = reader.toString();
+					game = new World(worldStr, false);
 				}
 
-				game = new World(worldStr, isMultiplayer);
+
 
 				game.run(sc);
 			}

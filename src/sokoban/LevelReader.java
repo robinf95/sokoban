@@ -8,10 +8,11 @@ import java.util.NoSuchElementException;
 
 public class LevelReader {
 	private String inputLevel = "";
+	private boolean isMultiplayer;
+	private Scanner sc;
 
-	Scanner sc;
-
-	public LevelReader(Scanner sc) {
+	public LevelReader(Scanner sc, boolean isMultiplayer) {
+		this.isMultiplayer = isMultiplayer;
 		this.sc = sc;
 		selectFile();
 	}
@@ -20,7 +21,7 @@ public class LevelReader {
 		System.out.println("Welches Level?");
 		String folder = System.getProperty("user.dir");
 		String level = sc.next();
-		File file = new File(folder + "/levels/" + level + ".txt");
+		File file = new File(folder + "/levels/" + level + (isMultiplayer? 'M': 'S') + ".txt");
 		readFile(file);
 	}
 

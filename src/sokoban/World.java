@@ -1,5 +1,6 @@
 package sokoban;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,13 +9,23 @@ public class World {
 	private GameLogic gameLogic;
 	private boolean isPlayerOneTurn = true;
 	private boolean isMultiplayer;
-	
+	private Server server;
+	private Client client;
+
 	public World(String levelString, boolean isMultiplayer) {
 		this.isMultiplayer = isMultiplayer;
 		gameField = new GameField(levelString, isMultiplayer);
 		gameLogic = new GameLogic(gameField);
 	}
-	
+
+	public World(String levelString, boolean isMultiplayer, Client client, Server server) {
+		this.isMultiplayer = isMultiplayer;
+		this.client = client;
+		this.server = server;
+		gameField = new GameField(levelString, isMultiplayer);
+		gameLogic = new GameLogic(gameField);
+	}
+
 	public void draw() {
 		System.out.println(gameField.toString());
 	}
@@ -32,13 +43,38 @@ public class World {
 	}
 
 	public void run(Scanner sc) {
-		String input;
+		String input = "";
 		this.draw();
 		//F�hrt das Programm solange aus bis die Boxen im Ziel sind
 		while (!gameLogic.checkWin()) {
 			System.out.printf("Score: %d/%d%n", gameLogic.getBoxesInTarget(), gameField.getBoxesAmount());
 			System.out.printf("Eingabe: ");
-			input = sc.next();
+			if(isMultiplayer){
+				//bin ich dran?
+				if((server != null && isPlayerOneTurn) ||(client != null && !isPlayerOneTurn)){
+					input = sc.next();
+					try {
+						if(server != null)
+							server.write(input);
+						else
+							client.write(input);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else{
+					try {
+						if(server != null)
+							input = server.read();
+						else
+							input = client.read();
+					} catch (IOException|NullPointerException e) {
+						e.printStackTrace();
+					}
+				}
+			}else{
+				input = sc.next();
+			}
+
 			if (input.charAt(0) == 'e') {
 				System.out.println("Spiel beendet");
 				return;
@@ -52,5 +88,5 @@ public class World {
 		System.out.println("Herzlichen Glueckwunsch! Level bestanden!");
 		System.exit(0);
 	}
-	
+
 }
