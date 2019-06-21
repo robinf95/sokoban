@@ -43,7 +43,7 @@ public class GameMain {
 						}
 					} else {
 						Server server = new Server();
-						reader = new LevelReader();
+						reader = new LevelReader(sc);
 						worldStr = reader.toString();
 						try {
 							server.connect();
@@ -53,7 +53,7 @@ public class GameMain {
 						}
 					}
 				} else {
-					reader = new LevelReader();
+					reader = new LevelReader(sc);
 					worldStr = reader.toString();
 				}
 
