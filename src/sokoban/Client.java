@@ -9,6 +9,7 @@ public class Client {
     Client(String ip, int port) {
         try {
             this.socket = new Socket(ip, port);
+            write("Connected");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -29,7 +29,12 @@ public class GameMain {
 					if (!isHost) {
 						System.out.println("IP des Servers: ");
 						ip = sc.next();
-						client = new Client(ip, 4444);
+						try {
+							client = new Client(ip, 4444);
+							worldStr = client.read();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					} else {
 						server = new Server();
 						try {
