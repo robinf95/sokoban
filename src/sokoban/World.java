@@ -6,27 +6,30 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class World {
-	public static GameField gameField;
-	private GameLogic gameLogic;
+	private static GameField gameField;
+	private static GameLogic gameLogic;
 	
 	public World(String levelString) {
 		gameField = new GameField(levelString);
 		gameLogic = new GameLogic(gameField);
 	}
 
-	public GameField getGameField() {
+	public static GameField getGameField() {
 		return gameField;
 	}
-
-	public void draw() {
-		Application.launch(GameFieldGUI.class);
-		System.out.println(gameField.toString());
+	
+	public static GameLogic getGameLogic() {
+		return gameLogic;
 	}
 
-	public void input(String input){
+	public static void draw() {
+		Application.launch(GameFieldGUI.class);
+	}
+
+	public static void input(String input){
 		try {
 			gameLogic.makeMovementPlayer(input.charAt(0) );
-			this.draw();
+			draw();
 		} catch (InputMismatchException e) {
 			System.err.println("Falsche Eingabe!");
 		}

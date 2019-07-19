@@ -1,6 +1,8 @@
 package sokoban;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,9 +16,8 @@ public class GameFieldGUI extends Application {
 
     @Override
     public void start(Stage stage) {
-        GameField gameField = World.gameField;
         GridPane root = new GridPane();
-        ArrayList<ArrayList<GameTile>> level = gameField.getLevel();
+        ArrayList<ArrayList<GameTile>> level = World.getGameField().getLevel();
         level.forEach(row->{
             int rowIndex = level.indexOf(row);
             row.forEach(column->{
@@ -29,13 +30,17 @@ public class GameFieldGUI extends Application {
                 imgView = new ImageView(img);
 
                 //binde image Property von Tile an Zelle
-                //Bindings.bindBidirectional(imageDisplay.imageProperty(), actualTile.getTileType().getPath().imageProperty());
+                // Bindings.bindBidirectional(imgView.imageProperty(), actualTile.getTileType().getPath().imageProperty());
 
                 //Zur Gridpane hinzufügen
                 root.add(imgView, columnIndex, rowIndex);
             });
         });
         Scene scene = new Scene(root, 1000, 1000);
+        scene.setOnKeyPressed((e) -> {
+            World.getGameLogic().makeMovementPlayer(e.getCode().toString().toLowerCase().charAt(0));
+        });
+        
 
         stage.setTitle("Sokoban GUI");
         stage.setScene(scene);

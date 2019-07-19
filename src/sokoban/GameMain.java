@@ -1,9 +1,9 @@
 package sokoban;
 
 public class GameMain {
+	private static World game;
 
 	public static void main(String[] args) {
-			World game;
 
 			LevelReader reader = new LevelReader();
 

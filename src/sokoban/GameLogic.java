@@ -28,7 +28,6 @@ public class GameLogic {
             case 'd':
                 x += newX += 1; break;
             default: throw new InputMismatchException();
-
         }
 
         //Hole Box falls nächstes Feld box
