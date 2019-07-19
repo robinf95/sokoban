@@ -6,12 +6,11 @@ import sokoban.GameTile.TilesEnum;
 
 
 public class GameField {
-	//zweidimensionale Liste zum speichern des Levels
+	// zweidimensionale Liste zum speichern des Levels
 	private ArrayList<ArrayList<GameTile>> level;
-	//Levelbreite
 
-	//Abstraktion Player und Boxen sind eine Schicht �ber dem Level,
-	//so k�nnen diese besser bewegt werden.
+	// Abstraktion Player und Boxen sind eine Schicht ueber dem Level,
+	// so koennen diese besser bewegt werden.
 	private Player[] player = new Player[2];
 	private ArrayList<Box> boxes;
 
@@ -27,8 +26,7 @@ public class GameField {
 		TilesEnum currentTile;
 
 		for(int i=0; i <= levelString.length()-1; i++) {
-			//Wenn noch keine zeile (y) besteht oder levelbreite erreicht wurde
-			//--> erzeuge neue Spalte
+			// erzeuge neue Spalte
 			if(levelString.charAt(i) == 'X' || level.isEmpty()) {
 				y++;
 				x = 0;
@@ -39,17 +37,17 @@ public class GameField {
 			//aktuelles Feld auslesen
 			currentTile = TilesEnum.getTile(levelString.charAt(i));
 			//wenn spieler und spieler noch nicht gesetzt
-			if(  currentTile == TilesEnum.PLAYERONE && player[1] == null) {
+			if (currentTile == TilesEnum.PLAYERONE && player[1] == null) {
 				this.player[1] = new Player(x, y);
-				currentTile = TilesEnum.EMPTY;
-			}else if( currentTile == TilesEnum.BOX ){
+				// currentTile = TilesEnum.EMPTY;
+			} else if (currentTile == TilesEnum.BOX ){
 				boxes.add(new Box(x, y));
-				currentTile = TilesEnum.EMPTY;
+				// currentTile = TilesEnum.EMPTY;
 			}
-
-			if(currentTile == TilesEnum.TARGET){
+			
+			if (currentTile == TilesEnum.TARGET){
 				level.get(y).add(new GameTile(currentTile, x, y));
-			} else{
+			} else {
 				level.get(y).add(new GameTile(currentTile));
 			}
 			x++;

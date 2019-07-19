@@ -1,26 +1,23 @@
 package sokoban;
 
-import javafx.scene.image.ImageView;
-
 public class GameTile{
 	private TilesEnum tile;
 	private int x, y;
 
 	public enum TilesEnum {
-		WALL("#", false, ""),
-		EMPTY(" ", true,  ""),
-		PLAYERONE("1", false, ""),
-		PLAYERTWO("2", false, ""),
-		BOX("$", false, ""),
-		TARGET(".", true, "");
+		WALL("#", false, "../resources/gate.bmp"),
+		EMPTY(" ", true,  "../resources/floor.bmp"),
+		PLAYERONE("1", false, "../resources/player2D.png"),
+		BOX("$", false, "../resources/boxP.png"),
+		TARGET(".", true, "../resources/pressure_pad.png");
 		//Kann man auf Feld gehen?
 		private final boolean moveOn;
 		private final String tile;
-		private final ImageView img;
+		private final String imgPath;
 		TilesEnum(String c, boolean moveOn, String imgPath) {
 			this.tile = c;
 			this.moveOn = moveOn;
-			img = new ImageView(imgPath);
+			this.imgPath = imgPath;
 		}
 
 		@Override
@@ -31,21 +28,17 @@ public class GameTile{
 		public boolean isMovable(){
 			return this.moveOn;
 		}
+		
+		public String getPath() { return this.imgPath; }
 
 		public static TilesEnum getTile(char c) {
 			switch(c) {
 				case '1': return PLAYERONE;
-				case '2': return PLAYERONE;
-				case ' ': return EMPTY;
 				case '#': return WALL;
 				case '$': return BOX;
 				case '.': return TARGET;
 				default:  return EMPTY;
 			}
-		}
-
-		public ImageView getImg() {
-			return img;
 		}
 	}
 

@@ -3,8 +3,8 @@ package sokoban;
 import java.util.InputMismatchException;
 
 public class GameLogic {
-    GameField gf;
-    Player player;
+    private GameField gf;
+    private Player player;
     private int boxesInTarget = 0;
 
     public GameLogic(GameField gf){

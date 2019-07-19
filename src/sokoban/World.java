@@ -1,18 +1,25 @@
 package sokoban;
 
+import javafx.application.Application;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class World {
-	GameField gameField;
-	GameLogic gameLogic;
+	public static GameField gameField;
+	private GameLogic gameLogic;
 	
 	public World(String levelString) {
 		gameField = new GameField(levelString);
 		gameLogic = new GameLogic(gameField);
 	}
-	
+
+	public GameField getGameField() {
+		return gameField;
+	}
+
 	public void draw() {
+		Application.launch(GameFieldGUI.class);
 		System.out.println(gameField.toString());
 	}
 
